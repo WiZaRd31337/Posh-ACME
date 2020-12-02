@@ -228,6 +228,11 @@ function Get-YandexTxtRecord {
         # find the zone for the closest/deepest sub-zone that would contain the record.
         $pieces = $RecordName.Split('.')
         for ($i=0; $i -lt ($pieces.Count-1); $i++) {
+            
+            # Hotfix for wildcard support
+            if ($pieces[0] -eq '*') {
+                $i ++                
+            }
 
             $zoneTest = $pieces[$i..($pieces.Count-1)] -join '.'
             Write-Debug "Checking $zoneTest"
